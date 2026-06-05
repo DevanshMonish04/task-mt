@@ -1,16 +1,10 @@
 [
   {
-    "id": "2227e341-342b-4439-967e-c7618c1cb818",
-    "title": "learn Python",
-    "description": "Learn the all concept in deep",
-    "dueDate": "2026-06-05",
-    "completed": false
-  },
-  {
-    "id": "e31bc436-e36e-46dd-88e6-ab805298232d",
-    "title": "Dbms",
-    "description": "learn db",
-    "dueDate": "2026-07-09",
+    "id": "1f68671f-68f3-41f0-84f5-d3ad885f1e8a",
+    "title": "learn sql",
+    "description": "try to learn mysql",
+    "startDate": "2026-06-05",
+    "dueDate": "2026-06-07",
     "completed": false
   }
 ]

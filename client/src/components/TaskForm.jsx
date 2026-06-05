@@ -37,6 +37,9 @@ const TaskForm = ({
       addTask({
         title: title.trim(),
         description: description.trim(),
+        startDate: new Date()
+          .toISOString()
+          .split("T")[0],
         dueDate,
       });
     }
@@ -56,25 +59,37 @@ const TaskForm = ({
         <input
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) =>
+            setTitle(e.target.value)
+          }
           placeholder="Task Title *"
           className="w-full border p-3 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <textarea
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) =>
+            setDescription(e.target.value)
+          }
           placeholder="Task Description"
           rows="3"
           className="w-full border p-3 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        <input
-          type="date"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-          className="w-full border p-3 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">
+            Due Date
+          </label>
+
+          <input
+            type="date"
+            value={dueDate}
+            onChange={(e) =>
+              setDueDate(e.target.value)
+            }
+            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         <button
           type="submit"
@@ -84,7 +99,9 @@ const TaskForm = ({
               : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
-          {isEditing ? "Update Task" : "Add Task"}
+          {isEditing
+            ? "Update Task"
+            : "Add Task"}
         </button>
       </form>
     </div>

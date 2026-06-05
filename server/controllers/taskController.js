@@ -24,12 +24,15 @@ export const createTask = (req, res) => {
   const tasks = readTasks();
 
   const newTask = {
-    id: uuidv4(),
-    title: req.body.title,
-    description: req.body.description || "",
-    dueDate: req.body.dueDate || "",
-    completed: false,
-  };
+  id: uuidv4(),
+  title: req.body.title,
+  description: req.body.description || "",
+  startDate:
+    req.body.startDate ||
+    new Date().toISOString().split("T")[0],
+  dueDate: req.body.dueDate || "",
+  completed: false,
+};
 
   tasks.unshift(newTask);
 
