@@ -102,6 +102,27 @@ const Home = () => {
 
     return matchesSearch && matchesFilter;
   });
+  
+
+  //Drag and Drop
+  const handleDragEnd = (result) => {
+  if (!result.destination) return;
+
+  const items = [...tasks];
+
+  const [reorderedItem] = items.splice(
+    result.source.index,
+    1
+  );
+
+  items.splice(
+    result.destination.index,
+    0,
+    reorderedItem
+  );
+
+  setTasks(items);
+};
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -131,6 +152,7 @@ const Home = () => {
           toggleTask={toggleTask}
           deleteTask={deleteTask}
           editTask={editTask}
+          handleDragEnd={handleDragEnd}
         />
       </div>
     </div>

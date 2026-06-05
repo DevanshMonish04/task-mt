@@ -38,6 +38,10 @@ const TaskCard = ({
           </p>
 
           <p className="text-sm text-gray-500 mt-3">
+            Start Date: {task.startDate || "No Start Date"}
+          </p>
+
+          <p className="text-sm text-gray-500 mt-3">
             Due: {task.dueDate || "No Due Date"}
           </p>
 
