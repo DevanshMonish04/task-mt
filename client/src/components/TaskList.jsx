@@ -28,9 +28,7 @@ const TaskList = ({
   }
 
   return (
-    <DragDropContext
-      onDragEnd={handleDragEnd}
-    >
+    <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="tasks">
         {(provided) => (
           <div
@@ -48,13 +46,15 @@ const TaskList = ({
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    {...provided.dragHandleProps}
                   >
                     <TaskCard
                       task={task}
                       toggleTask={toggleTask}
                       deleteTask={deleteTask}
                       editTask={editTask}
+                      dragHandleProps={
+                        provided.dragHandleProps
+                      }
                     />
                   </div>
                 )}

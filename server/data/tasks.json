@@ -1,11 +1,19 @@
 [
   {
+    "id": "2ce80e26-d42d-4216-9d30-047f88fd4774",
+    "title": "make tea",
+    "description": "make lemon tea",
+    "startDate": "2026-06-05",
+    "dueDate": "2026-06-06",
+    "completed": false
+  },
+  {
     "id": "5caa8af5-b031-4488-961a-0f85418197e6",
     "title": "python",
     "description": "learn the things",
     "startDate": "2026-06-05",
     "dueDate": "2025-04-01",
-    "completed": false
+    "completed": true
   },
   {
     "id": "873457e1-47ab-4a8e-aeed-3d179483158a",
