@@ -13,6 +13,7 @@ const TaskList = ({
   editTask,
   handleDragEnd,
 }) => {
+  // Display message when no tasks are available
   if (tasks.length === 0) {
     return (
       <div className="bg-white p-10 rounded-xl shadow text-center">
@@ -28,7 +29,10 @@ const TaskList = ({
   }
 
   return (
+    // Drag and Drop context wrapper
     <DragDropContext onDragEnd={handleDragEnd}>
+      
+      {/* Droppable area where tasks can be reordered */}
       <Droppable droppableId="tasks">
         {(provided) => (
           <div
@@ -36,6 +40,8 @@ const TaskList = ({
             ref={provided.innerRef}
             className="space-y-4"
           >
+            
+            {/* Render all tasks */}
             {tasks.map((task, index) => (
               <Draggable
                 key={task.id}
@@ -47,11 +53,14 @@ const TaskList = ({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
+                    {/* Individual Task Card */}
                     <TaskCard
                       task={task}
                       toggleTask={toggleTask}
                       deleteTask={deleteTask}
                       editTask={editTask}
+
+                      // Pass drag handle props to TaskCard
                       dragHandleProps={
                         provided.dragHandleProps
                       }
@@ -61,6 +70,7 @@ const TaskList = ({
               </Draggable>
             ))}
 
+            {/* Placeholder maintains layout during dragging */}
             {provided.placeholder}
           </div>
         )}

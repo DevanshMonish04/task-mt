@@ -6,15 +6,22 @@ import TaskList from "../components/TaskList";
 import API from "../services/api";
 
 const Home = () => {
+  // Search input state
   const [search, setSearch] = useState("");
+
+  // Filter state (all, active, completed)
   const [filter, setFilter] = useState("all");
 
+  // Stores the task currently being edited
   const [editingTask, setEditingTask] = useState(null);
+
+  // Tracks whether edit mode is active
   const [isEditing, setIsEditing] = useState(false);
 
+  // Stores all tasks fetched from backend
   const [tasks, setTasks] = useState([]);
 
-  // Fetch all tasks
+  // Fetch all tasks from API
   const fetchTasks = async () => {
     try {
       const res = await API.get("/");
@@ -24,36 +31,35 @@ const Home = () => {
     }
   };
 
+  // Load tasks when component mounts
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  // Add Task
+  // Add a new task
   const addTask = async (task) => {
     try {
       await API.post("/", task);
-      fetchTasks();
+      fetchTasks(); // Refresh task list
     } catch (error) {
       console.error("Error adding task:", error);
     }
   };
 
-  // Edit Task
+  // Set task data for editing
   const editTask = (task) => {
     setEditingTask(task);
     setIsEditing(true);
   };
 
-  // Update Task
+  // Update an existing task
   const updateTask = async (updatedTask) => {
     try {
-      await API.put(
-        `/${updatedTask.id}`,
-        updatedTask
-      );
+      await API.put(`/${updatedTask.id}`, updatedTask);
 
-      fetchTasks();
+      fetchTasks(); // Refresh task list
 
+      // Reset edit mode
       setEditingTask(null);
       setIsEditing(false);
     } catch (error) {
@@ -61,7 +67,7 @@ const Home = () => {
     }
   };
 
-  // Toggle Complete
+  // Toggle task completion status
   const toggleTask = async (id) => {
     try {
       await API.patch(`/${id}/toggle`);
@@ -71,7 +77,7 @@ const Home = () => {
     }
   };
 
-  // Delete Task
+  // Delete a task after confirmation
   const deleteTask = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete?"
@@ -87,12 +93,14 @@ const Home = () => {
     }
   };
 
-  // Search + Filter
+  // Apply search and filter logic
   const filteredTasks = tasks.filter((task) => {
+    // Check if task title matches search text
     const matchesSearch = task.title
       .toLowerCase()
       .includes(search.toLowerCase());
 
+    // Check filter condition
     const matchesFilter =
       filter === "all"
         ? true
@@ -102,37 +110,45 @@ const Home = () => {
 
     return matchesSearch && matchesFilter;
   });
-  
 
-  //Drag and Drop
+  // Handle drag-and-drop reordering
   const handleDragEnd = (result) => {
-  if (!result.destination) return;
+    // Exit if item is dropped outside droppable area
+    if (!result.destination) return;
 
-  const items = [...tasks];
+    // Create a copy of tasks array
+    const items = [...tasks];
 
-  const [reorderedItem] = items.splice(
-    result.source.index,
-    1
-  );
+    // Remove dragged item from old position
+    const [reorderedItem] = items.splice(
+      result.source.index,
+      1
+    );
 
-  items.splice(
-    result.destination.index,
-    0,
-    reorderedItem
-  );
+    // Insert item at new position
+    items.splice(
+      result.destination.index,
+      0,
+      reorderedItem
+    );
 
-  setTasks(items);
-};
+    // Update task order in state
+    setTasks(items);
+  };
 
   return (
     <div className="min-h-screen bg-slate-100">
       <div className="max-w-5xl mx-auto p-6">
+        
+        {/* Application Title */}
         <h1 className="text-4xl font-bold text-center mb-8">
           Personal Task Manager
         </h1>
 
+        {/* Task Statistics Section */}
         <Stats tasks={tasks} />
 
+        {/* Add/Edit Task Form */}
         <TaskForm
           addTask={addTask}
           updateTask={updateTask}
@@ -140,6 +156,7 @@ const Home = () => {
           isEditing={isEditing}
         />
 
+        {/* Search and Filter Controls */}
         <FilterBar
           filter={filter}
           setFilter={setFilter}
@@ -147,6 +164,7 @@ const Home = () => {
           setSearch={setSearch}
         />
 
+        {/* Task List with Drag & Drop Support */}
         <TaskList
           tasks={filteredTasks}
           toggleTask={toggleTask}
